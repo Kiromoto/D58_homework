@@ -13,12 +13,12 @@ class Author(models.Model):
         # sum_post_rating = self.post_set.aggregate(allPostRating=models.Sum('rating'))
         # postR = 0
         # postR += sum_post_rating.get('allPostRating')
-        #
-        # # суммарный рейтинг всех комментариев автора;
+
+        # суммарный рейтинг всех комментариев автора;
         # sum_comment_rating = self.author_user.comment_set.aggregate(authorCommentRating=models.Sum('comment_rating'))
         # commR = 0
         # commR += sum_comment_rating.get('authorCommentRating')
-        #
+
         # # # # суммарный рейтинг всех комментариев к статьям автора.
         # # sum_PostComment_rating = self.author_user.post.postComment_set.aggregate(allCommentPostRating=models.Sum('comment_rating'))
         # # pcommR = 0

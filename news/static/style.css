@@ -2,12 +2,21 @@
 /* :: 1.0 Import Fonts */
 @import url("https://fonts.googleapis.com/css?family=Raleway:200,300,400,500,600,700,800,900");
 /* :: 2.0 Import All CSS */
-@import url(css/bootstrap.min.css);
-@import url(css/classy-nav.css);
-@import url(css/owl.carousel.min.css);
-@import url(css/animate.css);
-@import url(css/magnific-popup.css);
-@import url(css/font-awesome.min.css);
+/*@import url(css/bootstrap.min.css);*/
+/*@import url(css/classy-nav.css);*/
+/*@import url(css/owl.carousel.min.css);*/
+/*@import url(css/animate.css);*/
+/*@import url(css/magnific-popup.css);*/
+/*@import url(css/font-awesome.min.css);*/
+
+@import "../static/css/bootstrap.min.css";
+@import "../static/css/classy-nav.css";
+@import "../static/css/owl.carousel.min.css";
+@import "../static/css/animate.css";
+@import "../static/css/magnific-popup.css";
+@import "../static/css/font-awesome.min.css";
+
+
 /* :: 3.0 Base CSS */
 * {
   margin: 0;

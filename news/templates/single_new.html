@@ -1,0 +1,148 @@
+{% extends 'index.html' %}
+
+{% block title %}
+    New detail
+{% endblock title %}
+
+{% block content %}
+
+    <!-- ##### Post Details Title Area Start ##### -->
+    <div class="post-details-title-area bg-overlay clearfix" style="background-image: url({{ single_post.picture.url }})">
+        <div class="container-fluid h-100">
+            <div class="row h-100 align-items-center">
+                <div class="col-12 col-lg-8">
+                    <!-- Post Content -->
+                    <div class="post-content">
+                        {% if new_categories %}
+                            {% for c in new_categories %}
+                                 <a href="#"><p class="tag"><span>{{ c.category_id }}</span></p></a>
+                            {% endfor %}
+                        {% endif %}
+                        <p class="post-title" style="font-size: 58px">{{ single_post.title }}</p>
+                        <div class="d-flex align-items-center">
+                            <span class="post-date mr-30">{{ single_post.datetime.date }}</span>
+                            <a href="#"><span class="post-date">By {{ single_post.author }}</span></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ##### Post Details Title Area End ##### -->
+
+    <!-- ##### Post Details Area Start ##### -->
+    <section class="post-news-area section-padding-100-0 mb-70">
+        <div class="container">
+            <div class="row justify-content-center">
+                <!-- Post Details Content Area -->
+                <div class="col-12 col-lg-8">
+                    <div class="post-details-content mb-100">
+                        <p style="font-size: 20px; text-align: left">{{ single_post.text }}</p>
+                        <img class="mb-30" src="{{ single_post.picture.url }}" alt="картинка новости">
+                    </div>
+
+
+                    {% if current_user.is_authenticated %}
+                        <!-- Comment Area Start -->
+                        <div class="post-a-comment-area mb-30 clearfix">
+                            <h4 class="mb-50">Оставить комментарий</h4>
+
+                            <!-- Reply Form -->
+                            <div class="contact-form-area">
+                                <form action="#" method="post">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <input type="text" class="form-control" id="name" style="font-size: 18px" value="{{ current_user.username }}">
+                                        </div>
+                                        <div class="col-12">
+                                            <textarea name="message" class="form-control" id="message" cols="30" rows="10" style="font-size: 18px" placeholder="Текст комментария"></textarea>
+                                        </div>
+                                        <div class="col-12">
+                                            <button class="btn newsbox-btn mt-30" type="submit">Submit Comment</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    {% if new_comments %}
+                        <div class="comment_area clearfix mb-100">
+                            <h4 class="mb-50">Комментарии</h4>
+
+                            <ol>
+                                {% for comment in new_comments %}
+                                    <!-- Single Comment Area -->
+                                    <li class="single_comment_area">
+                                        <!-- Comment Content -->
+                                        <div class="comment-content d-flex">
+                                            <!-- Comment Author -->
+                                            <div class="comment-author">
+                                                {% if comment.user.author.avatar %}
+                                                    <img src="{{ comment.user.author.avatar.url }}" alt="author">
+                                                {% else %}
+                                                    <img src="../static/img/bg-img/32.jpg" alt="author">
+                                                {% endif %}
+                                            </div>
+                                            <!-- Comment Meta -->
+                                            <div class="comment-meta">
+                                                <div class="d-flex">
+                                                    <a href="#" class="post-author">{{comment.user.username}}</a>
+                                                    <a href="#" class="post-date">{{ comment.datetime.date }}</a>
+                                                    <a href="#" class="reply">Рейтинг: {{ comment.rating }}</a>
+                                                </div>
+                                                <p>{{ comment.text }}</p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                {% endfor %}
+
+                            </ol>
+                        </div>
+                    {% endif %}
+
+
+                </div>
+
+                <!-- Sidebar Widget -->
+                <div class="col-12 col-sm-9 col-md-6 col-lg-4">
+                    <div class="sidebar-area">
+
+                        {% if last_news %}
+                            <!-- Latest News Widget -->
+                            <div class="single-widget-area news-widget mb-30">
+                                <h4>Последние новости</h4>
+
+                                {% for ln in last_news %}
+                                    <!-- Single News Area -->
+                                    <div class="single-blog-post d-flex style-4 mb-30">
+                                        <!-- Blog Thumbnail -->
+                                        <div class="blog-thumbnail">
+                                            <a href="{{ ln.get_absolute_url }}"><img src="{{ ln.picture.url }}" alt=""></a>
+                                        </div>
+
+                                        <!-- Blog Content -->
+                                        <div class="blog-content">
+                                            <span class="post-date">{{ ln.datetime.date }}</span>
+                                            <a href="{{ ln.get_absolute_url }}" class="post-title" style="font-size: 11px">{{ ln.title }}</a>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+
+                            </div>
+                        {% endif %}
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- ##### Post Details Area End ##### -->
+
+{% endblock content %}
+
+
+
+
+
+

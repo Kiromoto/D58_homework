@@ -1,3 +1,5 @@
+import datetime
+
 from django.contrib.auth.models import User
 from django.db import models
 from django.urls import reverse
@@ -6,6 +8,7 @@ from django.urls import reverse
 class Author(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     rating = models.IntegerField(default=0)
+    avatar = models.FileField(upload_to='uploads/', blank=True, verbose_name='Загрузить аватарку', default='uploads/ava_default.png')
 
     def update_rating(self):
         # # суммарный рейтинг каждой статьи автора умножается на 3;
@@ -36,7 +39,7 @@ class Category(models.Model):
     subscriber_c = models.ManyToManyField(User, through='Subscriber', blank=True)
 
     def get_subscribers(self):
-        return ';\n'.join([s.username for s in self.subscriber.all()])
+        return ';\n'.join([s.username for s in self.subscriber_c.all()])
 
     def __str__(self):
         return self.name
@@ -50,6 +53,7 @@ class Post(models.Model):
     text = models.TextField()
     rating = models.IntegerField(default=0)
     is_new = models.BooleanField(default=True)
+    picture = models.FileField(upload_to='uploads/', blank=True, verbose_name='Загрузить картинку для новости', default='uploads/default.jpg')
 
     def get_category(self):
         return '\n'.join([c.name for c in self.category.all()])
@@ -96,3 +100,6 @@ class Comment(models.Model):
     def dislike(self):
         self.rating -= 1
         self.save()
+
+    def __str__(self):
+        return f'{self.user}: {self.text}. Datetime: {datetime.date}. Rating: {self.rating}'

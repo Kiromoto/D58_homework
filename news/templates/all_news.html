@@ -32,29 +32,43 @@ All posts
             {% endif %}
         </div>
     </div>
+
+    <!-- ##### Start Pagination ##### -->
+    <div style="display: flex; justify-content: center">
+        {% if page_obj.has_previous %}
+            <a href="?page=1">
+                <button class="btn newsbox-btn btn-4 mt-15">1</button>
+            </a>
+            {% if page_obj.previous_page_number != 1 %}
+                <a href="?page={{ page_obj.previous_page_number }}">
+                    <button class="btn newsbox-btn btn-4 mt-15">{{ page_obj.previous_page_number }}</button>
+                </a>
+            {% endif %}
+        {% endif %}
+
+        <a href="?page={{ page_obj.number }}">
+            <button class="btn newsbox-btn btn-4 mt-15" disabled="true" style="background-color: #000000" >{{ page_obj.number }}</button>
+        </a>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.previous_page_number }}">
+                <button class="btn newsbox-btn btn-4 mt-15">{{ page_obj.previous_page_number }}</button>
+            </a>
+            <a href="?page={{ page_obj.next_page_number }}">
+                <button class="btn newsbox-btn btn-4 mt-15">{{ page_obj.next_page_number }}</button>
+            </a>
+            {% if paginator.num_pages != page_obj.next_page_number %}
+                ...
+                <a href="?page={{ page_obj.paginator.num_pages }}">
+                    <button class="btn newsbox-btn btn-4 mt-15">{{ page_obj.paginator.num_pages }}</button>
+                </a>
+            {% endif %}
+        {% endif %}
+    </div>
+    <!-- ##### End Pagination ##### -->
+
 </div>
 
 
-   {# Добавляем пагинацию на страницу #}
 
-   {# Информация о предыдущих страницах #}
-   {% if page_obj.has_previous %}
-       <a href="?page=1">1</a>
-       {% if page_obj.previous_page_number != 1 %}
-           ...
-           <a href="?page={{ page_obj.previous_page_number }}">{{ page_obj.previous_page_number }}</a>
-       {% endif %}
-   {% endif %}
-
-   {# Информация о текущей странице #}
-   {{ page_obj.number }}
-
-   {# Информация о следующих страницах #}
-   {% if page_obj.has_next %}
-       <a href="?page={{ page_obj.next_page_number }}">{{ page_obj.next_page_number }}</a>
-       {% if paginator.num_pages != page_obj.next_page_number %}
-           ...
-           <a href="?page={{ page_obj.paginator.num_pages }}">{{ page_obj.paginator.num_pages }}</a>
-       {% endif %}
-   {% endif %}
 {% endblock content %}

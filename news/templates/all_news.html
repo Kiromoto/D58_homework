@@ -5,16 +5,28 @@ All posts
 {% endblock title %}
 
 {% block content %}
+<section class="breaking-news-area">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                        <div id="breakingNewsTicker" class="ticker" style="height: 100px;">
+                            <div style="display: flex; justify-content: center">
+                                <form style="display: flex; justify-content: center" action="" method="get" style="margin-bottom: 40px">
+                                    <p>{{ filterset.form.as_p }}</p>
+                                    <input class="btn newsbox-btn btn-1 mt-15" type="submit" value="Найти"/>
+                                </form>
+                            </div>
+                        </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+
 <div class="top-news-area section-padding-100">
     <div class="container">
-        <div style="display: flex; justify-content: center">
-            <form action="" method="get" style="margin-bottom: 40px">
-                {{ filterset.form.as_p }}
-                <input class="btn newsbox-btn btn-1 mt-15" type="submit" value="Найти"/>
-            </form>
-        </div>
-
-
         <div class="row">
             {% if posts %}
                 {% for p in posts %}
@@ -44,7 +56,7 @@ All posts
 
 
 
-    <!-- ##### Start NEW Pagination ##### -->
+    <!-- ##### Start Pagination ##### -->
     <div style="display: flex; justify-content: center">
         {% if page_obj.paginator.num_pages > 1 %}
             {% if page_obj.number == 1 %}
@@ -100,7 +112,7 @@ All posts
 
 
     </div>
-    <!-- ##### End NEW Pagination ##### -->
+    <!-- ##### End Pagination ##### -->
 
 </div>
 

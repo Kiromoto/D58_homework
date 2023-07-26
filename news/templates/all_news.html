@@ -7,6 +7,14 @@ All posts
 {% block content %}
 <div class="top-news-area section-padding-100">
     <div class="container">
+        <div style="display: flex; justify-content: center">
+            <form action="" method="get" style="margin-bottom: 40px">
+                {{ filterset.form.as_p }}
+                <input class="btn newsbox-btn btn-1 mt-15" type="submit" value="Найти"/>
+            </form>
+        </div>
+
+
         <div class="row">
             {% if posts %}
                 {% for p in posts %}
@@ -33,42 +41,67 @@ All posts
         </div>
     </div>
 
-    <!-- ##### Start Pagination ##### -->
+
+
+
+    <!-- ##### Start NEW Pagination ##### -->
     <div style="display: flex; justify-content: center">
-        {% if page_obj.has_previous %}
-            <a href="?page=1">
-                <button class="btn newsbox-btn btn-4 mt-15">1</button>
-            </a>
-            {% if page_obj.previous_page_number != 1 %}
-                <a href="?page={{ page_obj.previous_page_number }}">
-                    <button class="btn newsbox-btn btn-4 mt-15">{{ page_obj.previous_page_number }}</button>
+        {% if page_obj.paginator.num_pages > 1 %}
+            {% if page_obj.number == 1 %}
+                <a href="?page=1">
+                    <button class="btn newsbox-btn btn-4 mt-15" disabled="true" style="background-color: #000000">1</button>
+                </a>
+                {% if page_obj.has_next and page_obj.next_page_number < page_obj.paginator.num_pages %}
+                    <a href="?page={{page_obj.next_page_number}}">
+                        <button class="btn newsbox-btn btn-4 mt-15">{{page_obj.next_page_number}}</button>
+                    </a>
+                {% endif %}
+            {% else %}
+                <a href="?page=1">
+                    <button class="btn newsbox-btn btn-4 mt-15">1</button>
                 </a>
             {% endif %}
-        {% endif %}
 
-        <a href="?page={{ page_obj.number }}">
-            <button class="btn newsbox-btn btn-4 mt-15" disabled="true" style="background-color: #000000" >{{ page_obj.number }}</button>
-        </a>
 
-        {% if page_obj.has_next %}
-            <a href="?page={{ page_obj.previous_page_number }}">
-                <button class="btn newsbox-btn btn-4 mt-15">{{ page_obj.previous_page_number }}</button>
-            </a>
-            <a href="?page={{ page_obj.next_page_number }}">
-                <button class="btn newsbox-btn btn-4 mt-15">{{ page_obj.next_page_number }}</button>
-            </a>
-            {% if paginator.num_pages != page_obj.next_page_number %}
-                ...
+            {% if page_obj.number > 1 and page_obj.number < page_obj.paginator.num_pages %}
+                {% if page_obj.has_previous and page_obj.previous_page_number > 1 %}
+                    <a href="?page={{page_obj.previous_page_number}}">
+                        <button class="btn newsbox-btn btn-4 mt-15">{{page_obj.previous_page_number}}</button>
+                    </a>
+                {% endif %}
+
+                <a href="?page={{ page_obj.number }}">
+                    <button class="btn newsbox-btn btn-4 mt-15" disabled="true" style="background-color: #000000" >{{ page_obj.number }}</button>
+                </a>
+
+                 {% if page_obj.has_next and page_obj.next_page_number < page_obj.paginator.num_pages %}
+                    <a href="?page={{page_obj.next_page_number}}">
+                        <button class="btn newsbox-btn btn-4 mt-15">{{page_obj.next_page_number}}</button>
+                    </a>
+                {% endif %}
+            {% endif %}
+
+            {% if page_obj.number == page_obj.paginator.num_pages and page_obj.number > 1 %}
+                {% if page_obj.has_previous and page_obj.previous_page_number > 1 %}
+                    <a href="?page={{page_obj.previous_page_number}}">
+                        <button class="btn newsbox-btn btn-4 mt-15">{{page_obj.previous_page_number}}</button>
+                    </a>
+                {% endif %}
+                 <a href="?page={{ page_obj.paginator.num_pages }}">
+                    <button class="btn newsbox-btn btn-4 mt-15" disabled="true" style="background-color: #000000">{{ page_obj.paginator.num_pages }}</button>
+                 </a>
+            {% elif page_obj.paginator.num_pages > 1  %}
                 <a href="?page={{ page_obj.paginator.num_pages }}">
                     <button class="btn newsbox-btn btn-4 mt-15">{{ page_obj.paginator.num_pages }}</button>
                 </a>
             {% endif %}
         {% endif %}
+
+
+
     </div>
-    <!-- ##### End Pagination ##### -->
+    <!-- ##### End NEW Pagination ##### -->
 
 </div>
-
-
 
 {% endblock content %}

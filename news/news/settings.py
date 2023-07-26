@@ -43,6 +43,8 @@ INSTALLED_APPS = [
 
     'django.contrib.sites',
     'app',
+    'django_filters',
+    
 ]
 
 SITE_ID = 1

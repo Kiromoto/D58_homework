@@ -33,5 +33,4 @@ class PostDetail(DetailView):
         context['new_categories'] = list(PostCategory.objects.filter(post_id_id=context['single_post'].id))
         context['last_news'] = list(Post.objects.order_by('-datetime')[:7])
         context['new_comments'] = list(Comment.objects.order_by('-datetime').filter(post=context['single_post']))
-        # print(f'context AFTER: {context}')
         return context

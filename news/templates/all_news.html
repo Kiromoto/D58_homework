@@ -9,11 +9,15 @@ All posts
         <div class="container-fluid">
             <div class="row">
                 <div class="col-12">
-                        <div id="breakingNewsTicker" class="ticker" style="height: 100px;">
+                        <div id="breakingNewsTicker" class="ticker" style="height: 60px;">
                             <div style="display: flex; justify-content: center">
-                                <form style="display: flex; justify-content: center" action="" method="get" style="margin-bottom: 40px">
-                                    <p>{{ filterset.form.as_p }}</p>
-                                    <input class="btn newsbox-btn btn-1 mt-15" type="submit" value="Найти"/>
+                                <form action="" method="get">
+                                    <div style="display: flex; justify-content: center">
+                                        {% for f in filterset.form %}
+                                            <div style="padding: 15px 10px 0 0; font-size: 20px; font-family: Raleway, sans-serif">{{ f }}</div>
+                                        {% endfor %}
+                                        <input class="btn newsbox-btn btn-1 mt-15" type="submit" value="Найти"/>
+                                    </div>
                                 </form>
                             </div>
                         </div>

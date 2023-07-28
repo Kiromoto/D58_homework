@@ -64,16 +64,16 @@ All posts
     <div style="display: flex; justify-content: center">
         {% if page_obj.paginator.num_pages > 1 %}
             {% if page_obj.number == 1 %}
-                <a href="?page=1">
+                <a href="?{% url_replace page=1 %}">
                     <button class="btn newsbox-btn btn-4 mt-15" disabled="true" style="background-color: #000000">1</button>
                 </a>
                 {% if page_obj.has_next and page_obj.next_page_number < page_obj.paginator.num_pages %}
-                    <a href="?page={{page_obj.next_page_number}}">
+                    <a href="?{% url_replace page=page_obj.next_page_number  %}">
                         <button class="btn newsbox-btn btn-4 mt-15">{{page_obj.next_page_number}}</button>
                     </a>
                 {% endif %}
             {% else %}
-                <a href="?page=1">
+                <a href="?{% url_replace page=1 %}">
                     <button class="btn newsbox-btn btn-4 mt-15">1</button>
                 </a>
             {% endif %}
@@ -81,17 +81,17 @@ All posts
 
             {% if page_obj.number > 1 and page_obj.number < page_obj.paginator.num_pages %}
                 {% if page_obj.has_previous and page_obj.previous_page_number > 1 %}
-                    <a href="?page={{page_obj.previous_page_number}}">
+                    <a href="{% url_replace page=page_obj.previous_page_number %}">
                         <button class="btn newsbox-btn btn-4 mt-15">{{page_obj.previous_page_number}}</button>
                     </a>
                 {% endif %}
 
-                <a href="?page={{ page_obj.number }}">
+                <a href="?{% url_replace page=page_obj.number %}">
                     <button class="btn newsbox-btn btn-4 mt-15" disabled="true" style="background-color: #000000" >{{ page_obj.number }}</button>
                 </a>
 
                  {% if page_obj.has_next and page_obj.next_page_number < page_obj.paginator.num_pages %}
-                    <a href="?page={{page_obj.next_page_number}}">
+                    <a href="?{% url_replace page=page_obj.next_page_number %}">
                         <button class="btn newsbox-btn btn-4 mt-15">{{page_obj.next_page_number}}</button>
                     </a>
                 {% endif %}
@@ -99,15 +99,15 @@ All posts
 
             {% if page_obj.number == page_obj.paginator.num_pages and page_obj.number > 1 %}
                 {% if page_obj.has_previous and page_obj.previous_page_number > 1 %}
-                    <a href="?page={{page_obj.previous_page_number}}">
+                    <a href="?{% url_replace page=page_obj.previous_page_number %}">
                         <button class="btn newsbox-btn btn-4 mt-15">{{page_obj.previous_page_number}}</button>
                     </a>
                 {% endif %}
-                 <a href="?page={{ page_obj.paginator.num_pages }}">
+                 <a href="?{% url_replace page=page_obj.paginator.num_pages %}">
                     <button class="btn newsbox-btn btn-4 mt-15" disabled="true" style="background-color: #000000">{{ page_obj.paginator.num_pages }}</button>
                  </a>
             {% elif page_obj.paginator.num_pages > 1  %}
-                <a href="?page={{ page_obj.paginator.num_pages }}">
+                <a href="?{% url_replace page=page_obj.paginator.num_pages %}">
                     <button class="btn newsbox-btn btn-4 mt-15">{{ page_obj.paginator.num_pages }}</button>
                 </a>
             {% endif %}

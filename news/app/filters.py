@@ -28,3 +28,4 @@ class PostFilter(FilterSet):
         model = Post
         fields = ['category', 'author', 'datetime', 'text', 'title', ]
 
+

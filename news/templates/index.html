@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 
-
-
 <head>
     <meta charset="UTF-8">
     <meta name="description" content="">
@@ -62,17 +60,17 @@
                         <!-- Nav Start -->
                         <div class="classynav">
                             <ul>
-                                <li><a href="http://127.0.0.1:8000/news/">All News</a></li>
-                                <li><a href="#">Pages</a>
+                                <li><a href="http://127.0.0.1:8000/news/">Все новости</a></li>
+                                <li><a href="#">Страницы</a>
                                     <ul class="dropdown">
-                                        <li><a href="http://127.0.0.1:8000/news/">Home</a></li>
-                                        <li><a href="#">Catagory</a></li>
-                                        <li><a href="#">Single Post</a></li>
-                                        <li><a href="#">Contact</a></li>
-                                        <li><a href="http://127.0.0.1:8000/admin/">Admin Panel</a></li>
+                                        {% if current_user.is_authenticated %}
+                                            <li><a href="{% url 'add_new' %}">Создать новость</a></li>
+                                        {% endif %}
+                                        <li><a href="#">Контакты</a></li>
+                                        <li><a href="http://127.0.0.1:8000/admin/">Панель админа</a></li>
                                     </ul>
                                 </li>
-                                <li><a href="#">Catagory</a>
+                                <li><a href="#">Категории</a>
                                     <ul class="dropdown">
                                         {% for c in categories %}
                                             <li><a href="#">{{ c.name }}</a></li>
@@ -81,9 +79,9 @@
                                 </li>
                                 {% if current_user.is_authenticated %}
                                     <li><a href="#">{{ current_user.username }}</a></li>
-                                    <li><a href="#">Logout</a></li>
+                                    <li><a href="#">Выйти</a></li>
                                 {% else %}
-                                    <li><a href="#">Login</a></li>
+                                    <li><a href="#">Войти</a></li>
                                 {% endif %}
                             </ul>
 
@@ -100,6 +98,7 @@
 
 
 <!-- ##### Top News Area Start ##### -->
+{% load custom_tags %}
 
 {% block content %}
 {% endblock content %}

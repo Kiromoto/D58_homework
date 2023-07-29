@@ -1,14 +1,15 @@
-from django_filters import FilterSet, ModelChoiceFilter, DateFilter, CharFilter
+from django_filters import FilterSet, ModelChoiceFilter, DateFilter, CharFilter, ChoiceFilter
 from django.forms import DateInput
 from .models import Post, Author, Category
 
 
 class PostFilter(FilterSet):
     category = ModelChoiceFilter(queryset=Category.objects.all(),
-                                 lookup_expr='in',
+                                 lookup_expr='exact',
                                  label='Категории',
                                  empty_label='Все категории',
                                  )
+
     author = ModelChoiceFilter(queryset=Author.objects.all(),
                                lookup_expr='exact',
                                label='Автор',
@@ -27,5 +28,3 @@ class PostFilter(FilterSet):
     class Meta:
         model = Post
         fields = ['category', 'author', 'datetime', 'text', 'title', ]
-
-

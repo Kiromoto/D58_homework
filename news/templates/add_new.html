@@ -1,0 +1,47 @@
+{% extends 'index.html' %}
+{% load custom_tags %}
+
+{% block title %}
+Create new
+{% endblock title %}
+
+{% block content %}
+<section class="post-news-area section-padding-100-0 mb-70">
+    <div class="container">
+        <div class="row justify-content-center">
+            <!-- Add New Area Start-->
+            <div class="post-a-comment-area mb-30 clearfix">
+                <h4 class="mb-50">{{current_user.username}}, на этой странице вы можете опубликовать новость!</h4>
+                <div class="contact-form-area">
+                    <form action="#" method="post">
+                        <div class="row">
+                            <div class="col-12">
+                                <input type="text" class="form-control" id="name" style="font-size: 18px"
+                                       value="{{ current_user.username }}">
+                            </div>
+                            <div class="col-12">
+                                <textarea name="message" class="form-control" id="message" cols="30" rows="10"
+                                          style="font-size: 18px"
+                                          placeholder="Текст комментария"></textarea>
+                            </div>
+                            <div class="col-12">
+                                <button class="btn newsbox-btn mt-30" type="submit">Опубликовать</button>
+                            </div>
+                        </div>
+                    </form>
+
+
+                    <form class="form-control" align="left" action="" method="post">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        <input class="btn btn-primary" align="left" type="submit" value="Опубликовать"/>
+                    </form>
+                </div>
+            </div>
+            <!-- Add New Area End-->
+        </div>
+    </div>
+</section>
+
+
+{% endblock content %}

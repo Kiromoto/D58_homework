@@ -1,7 +1,10 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, redirect
+from django.http import HttpResponseRedirect
 from django.views.generic import ListView, DetailView
+from django.conf import settings
 from .models import Post, PostCategory, Comment
 from .filters import PostFilter
+from .forms import PostForm
 
 
 class PostList(ListView):
@@ -34,3 +37,23 @@ class PostDetail(DetailView):
         context['last_news'] = list(Post.objects.order_by('-datetime')[:7])
         context['new_comments'] = list(Comment.objects.order_by('-datetime').filter(post=context['single_post']))
         return context
+
+
+# @login_required(login_url=settings.LOGINURL)
+def add_new(request):
+    if request.user.is_authenticated:
+        if request.method == 'GET':
+            form = PostForm()
+            return render(request, 'add_new.html', {'form': form})
+
+        if request.method == 'POST':
+            form = PostForm(request.POST)
+            post = form.save(commit=False)
+            post.author = request.user
+
+        post.save()
+
+        return redirect(post.get_absolute_url())
+
+    else:
+        return HttpResponseRedirect(settings.LOGINURL)

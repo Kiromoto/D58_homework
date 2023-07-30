@@ -2203,4 +2203,42 @@ img {
 
 /* ====== The End ====== */
 
+
+#id_title, #id_category, #id_picture {
+    position: relative;
+    z-index: 2;
+    height: 54px;
+    width: 100%;
+    background-color: #f0f4f8;
+    font-size: 20px;
+    margin-bottom: 15px;
+    border: none;
+    border-radius: 0;
+    padding: 15px 30px;
+    font-weight: 500;
+    color: #aeaeae;
+    -webkit-transition-duration: 500ms;
+    transition-duration: 500ms;
+
+}
+
+#id_text {
+    position: relative;
+    z-index: 2;
+    height: 150px;
+    width: 100%;
+    background-color: #f0f4f8;
+    font-size: 20px;
+    margin-bottom: 15px;
+    border: none;
+    border-radius: 0;
+    padding: 15px 30px;
+    font-weight: 500;
+    color: #aeaeae;
+    -webkit-transition-duration: 500ms;
+    transition-duration: 500ms;
+
+}
+
+
 /*# sourceMappingURL=style.css.map */

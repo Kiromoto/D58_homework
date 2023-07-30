@@ -12,7 +12,7 @@ class PostList(ListView):
     ordering = '-datetime'
     template_name = 'all_news.html'
     context_object_name = 'posts'
-    paginate_by = 3
+    paginate_by = 6
 
     def get_filter(self):
         return PostFilter(self.request.GET, queryset=super().get_queryset())
@@ -41,7 +41,8 @@ class PostDetail(DetailView):
 
 # @login_required(login_url=settings.LOGINURL)
 def add_new(request):
-    if request.user.is_authenticated:
+    print(f'request.user.is_authenticated === {request.user.is_authenticated}')
+    if request.user.is_authenticated and request.user.author:
         if request.method == 'GET':
             form = PostForm()
             return render(request, 'add_new.html', {'form': form})
@@ -49,7 +50,7 @@ def add_new(request):
         if request.method == 'POST':
             form = PostForm(request.POST)
             post = form.save(commit=False)
-            post.author = request.user
+            post.author = request.user.author
 
         post.save()
 

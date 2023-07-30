@@ -9,36 +9,45 @@ Create new
 <section class="post-news-area section-padding-100-0 mb-70">
     <div class="container">
         <div class="row justify-content-center">
-            <!-- Add New Area Start-->
             <div class="post-a-comment-area mb-30 clearfix">
                 <h4 class="mb-50">{{current_user.username}}, на этой странице вы можете опубликовать новость!</h4>
                 <div class="contact-form-area">
-                    <form action="#" method="post">
+                    <form action="" method="post" style="font-size: 20px">
+                        {% csrf_token %}
                         <div class="row">
+                            {{ form.non_field_errors }}
                             <div class="col-12">
-                                <input type="text" class="form-control" id="name" style="font-size: 18px"
-                                       value="{{ current_user.username }}">
+                                {{ form.category.errors }}
+                                <label style="font-size: 20px; font-weight: bold"
+                                       for="{{ form.category.id_for_label }}">Категория:</label>
+                                {{ form.category }}
                             </div>
                             <div class="col-12">
-                                <textarea name="message" class="form-control" id="message" cols="30" rows="10"
-                                          style="font-size: 18px"
-                                          placeholder="Текст комментария"></textarea>
+                                {{ form.title.errors }}
+                                <label style="font-size: 20px; margin-top: 20px; font-weight: bold"
+                                       for="{{ form.title.id_for_label }}">Заголовок статьи:</label>
+                                {{ form.title }}
                             </div>
                             <div class="col-12">
-                                <button class="btn newsbox-btn mt-30" type="submit">Опубликовать</button>
+                                {{ form.text.errors }}
+                                <label style="font-size: 20px; margin-top: 20px; font-weight: bold"
+                                       for="{{ form.text.id_for_label }}">Содержание статьи:</label>
+                                {{ form.text }}
+                            </div>
+                            <div class="col-12">
+                                {{ form.picture.errors }}
+                                <label style="font-size: 20px; margin-top: 20px; font-weight: bold"
+                                       for="{{ form.picture.id_for_label }}">Загрузите обложку статьи:</label>
+                                {{ form.picture }}
+                            </div>
+                            <div class="col-12">
+                                <input class="btn newsbox-btn mt-30" type="submit" value="Опубликовать"/>
                             </div>
                         </div>
                     </form>
 
-
-                    <form class="form-control" align="left" action="" method="post">
-                        {% csrf_token %}
-                        {{ form.as_p }}
-                        <input class="btn btn-primary" align="left" type="submit" value="Опубликовать"/>
-                    </form>
                 </div>
             </div>
-            <!-- Add New Area End-->
         </div>
     </div>
 </section>

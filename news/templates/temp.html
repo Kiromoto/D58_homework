@@ -1,0 +1,38 @@
+<tr>
+    <th><label for="id_category">Категория:</label></th>
+    <td>
+        <select name="category" required id="id_category">
+            <option value="" selected>---------</option>
+            <option value="1">Авто</option>
+            <option value="2">Технологии</option>
+            <option value="3">Официально</option>
+            <option value="4">Кошелек</option>
+            <option value="5">Кино</option>
+        </select>
+    </td>
+</tr>
+
+<tr>
+    <th><label for="id_title">Заголовок:</label></th>
+    <td>
+        <input type="text" name="title" required id="id_title">
+    </td>
+</tr>
+
+<tr>
+    <th><label for="id_text">Текст статьи:</label></th>
+    <td>
+        <textarea name="text" cols="40" rows="10" required id="id_text"></textarea>
+    </td>
+</tr>
+
+<tr>
+    <th><label for="id_picture">Загрузите картинку для статьи:</label></th>
+    <td>
+        <input type="file" name="picture" id="id_picture">
+    </td>
+</tr>
+
+
+
+1. Не загружаются файлы при добавлении новости через страницу! (через админку все работает!)

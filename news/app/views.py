@@ -42,19 +42,23 @@ class PostDetail(DetailView):
 # @login_required(login_url=settings.LOGINURL)
 def add_new(request):
     print(f'request.user.is_authenticated === {request.user.is_authenticated}')
+    print(f'request.user.author === {request.user.author}')
     if request.user.is_authenticated and request.user.author:
         if request.method == 'GET':
             form = PostForm()
+            print(f'if request.method == "GET":')
             return render(request, 'add_new.html', {'form': form})
 
         if request.method == 'POST':
-            form = PostForm(request.POST)
-            post = form.save(commit=False)
-            post.author = request.user.author
-
-        post.save()
-
-        return redirect(post.get_absolute_url())
-
+            form = PostForm(request.POST, request.FILES)
+            print(f'form.is_valid(): {form.is_valid()}')
+            if form.is_valid():
+                post = form.save(commit=False)
+                post.author = request.user.author
+                post.save()
+                return redirect(post.get_absolute_url())
+            else:
+                form = PostForm()
     else:
-        return HttpResponseRedirect(settings.LOGINURL)
+        print(f'if HttpResponseRedirect("/news/")')
+        return HttpResponseRedirect('/news/')

@@ -18,10 +18,3 @@ class PostForm(forms.ModelForm):
             'picture',
         ]
 
-    def clean_new_added(self):
-        new_added = self.cleaned_data["title"]
-        print(f'title = cleaned_data.get === {new_added}')
-        if new_added is not None and len(new_added) < 10:
-            raise ValidationError("Заголовок статьи не может быть менее 10 символов.")
-
-        return new_added

@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, UpdateView
 from django.conf import settings
 from .models import Post, PostCategory, Comment
 from .filters import PostFilter
@@ -37,6 +37,13 @@ class PostDetail(DetailView):
         context['last_news'] = list(Post.objects.order_by('-datetime')[:7])
         context['new_comments'] = list(Comment.objects.order_by('-datetime').filter(post=context['single_post']))
         return context
+
+
+class PostUpdate(UpdateView):
+    form_class = PostForm
+    model = Post
+    template_name = 'add_new.html'
+    context_object_name = 'single_post'
 
 
 # @login_required(login_url=settings.LOGINURL)

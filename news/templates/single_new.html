@@ -7,7 +7,11 @@
 {% block content %}
 
     <!-- ##### Post Details Title Area Start ##### -->
-    <div class="post-details-title-area bg-overlay clearfix" style="background-image: url({{ single_post.picture.url }})">
+    {% if single_post.picture %}
+        <div class="post-details-title-area bg-overlay clearfix" style="background-image: url({{ single_post.picture.url }})">
+    {% else %}
+        <div class="post-details-title-area bg-overlay clearfix" style="background-image: url(/media/uploads/default.jpg)">
+    {% endif %}
         <div class="container-fluid h-100">
             <div class="row h-100 align-items-center">
                 <div class="col-12 col-lg-8">
@@ -18,7 +22,7 @@
                                  <a href="#"><p class="tag"><span>{{ c.category_id }}</span></p></a>
                             {% endfor %}
                         {% endif %}
-                        <p class="post-title" style="font-size: 58px">{{ single_post.title }}</p>
+                        <p class="post-title" style="font-size: 45px">{{ single_post.title }}</p>
                         <div class="d-flex align-items-center">
                             <span class="post-date mr-30">{{ single_post.datetime.date }}</span>
                             <a href="#"><span class="post-date">By {{ single_post.author }}</span></a>
@@ -38,7 +42,18 @@
                 <div class="col-12 col-lg-8">
                     <div class="post-details-content mb-100">
                         <p style="font-size: 20px; text-align: left">{{ single_post.text }}</p>
-                        <img class="mb-30" src="{{ single_post.picture.url }}" alt="картинка новости">
+                        {% if single_post.picture %}
+                            <img class="mb-30" src="{{ single_post.picture.url }}" alt="картинка новости">
+                        {% else %}
+                            <img class="mb-30" src="../media/uploads/default.jpg" alt="картинка новости">
+                        {% endif %}
+
+                        {% if user == post_author_user %}
+                            <a href="{% url 'update_new' single_post.pk %}">
+                                <button class="btn newsbox-btn btn-5 mt-30" type="button">Редактировать новость</button>
+                            </a>
+                        {% endif %}
+
                     </div>
 
 
@@ -49,7 +64,8 @@
 
                             <!-- Reply Form -->
                             <div class="contact-form-area">
-                                <form action="#" method="post">
+                                <form action="" method="post" enctype="multipart/form-data">
+                                    {% csrf_token %}
                                     <div class="row">
                                         <div class="col-12">
                                             <input type="text" class="form-control" id="name" style="font-size: 18px" value="{{ current_user.username }}">
@@ -118,7 +134,9 @@
                                     <div class="single-blog-post d-flex style-4 mb-30">
                                         <!-- Blog Thumbnail -->
                                         <div class="blog-thumbnail">
-                                            <a href="{{ ln.get_absolute_url }}"><img src="{{ ln.picture.url }}" alt=""></a>
+                                            {% if ln.picture %}
+                                                <a href="{{ ln.get_absolute_url }}"><img src="{{ ln.picture.url }}" alt=""></a>
+                                            {% endif %}
                                         </div>
 
                                         <!-- Blog Content -->

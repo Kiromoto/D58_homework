@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponseForbidden
 from django.views.generic import ListView, DetailView, UpdateView
 from django.conf import settings
 from .models import Post, PostCategory, Comment
@@ -36,6 +36,10 @@ class PostDetail(DetailView):
         context['new_categories'] = list(PostCategory.objects.filter(post_id_id=context['single_post'].id))
         context['last_news'] = list(Post.objects.order_by('-datetime')[:7])
         context['new_comments'] = list(Comment.objects.order_by('-datetime').filter(post=context['single_post']))
+        self.object = self.get_object()
+        context['post_author_user'] = self.object.author.user
+        print(f'context["post_author_user"] {context["post_author_user"]}')
+
         return context
 
 
@@ -45,20 +49,34 @@ class PostUpdate(UpdateView):
     template_name = 'add_new.html'
     context_object_name = 'single_post'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['is_update'] = True
+        return context
+
+    def get(self, request, *args, **kwargs):
+        self.object = self.get_object()
+
+        if not request.user == self.object.author.user:
+            print(f'if not {request.user} == {self.object.author.user}')
+            return HttpResponseForbidden(
+                f"Вы не обладаете правами на редактирование поста << {self.object.title} >>, так как вы не его автор!")
+        else:
+            print(f'if  {request.user} == {self.object.author.user}')
+
+        return super().get(request, *args, **kwargs)
+
 
 # @login_required(login_url=settings.LOGINURL)
 def add_new(request):
-    print(f'request.user.is_authenticated === {request.user.is_authenticated}')
-    print(f'request.user.author === {request.user.author}')
     if request.user.is_authenticated and request.user.author:
         if request.method == 'GET':
             form = PostForm()
-            print(f'if request.method == "GET":')
-            return render(request, 'add_new.html', {'form': form})
+            return render(request, template_name='add_new.html', context={'form': form})
 
         if request.method == 'POST':
             form = PostForm(request.POST, request.FILES)
-            print(f'form.is_valid(): {form.is_valid()}')
+            print(f'request.FILES === {request.FILES}')
             if form.is_valid():
                 post = form.save(commit=False)
                 post.author = request.user.author
@@ -66,6 +84,7 @@ def add_new(request):
                 return redirect(post.get_absolute_url())
             else:
                 form = PostForm()
+        return render(request, template_name='add_new.html', context={'form': form})
+
     else:
-        print(f'if HttpResponseRedirect("/news/")')
-        return HttpResponseRedirect('/news/')
+        return HttpResponseRedirect(settings.LOGIN_REDIRECT_URL)

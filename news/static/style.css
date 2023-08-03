@@ -411,6 +411,8 @@ img {
     text-transform: capitalize;
 }
 
+
+
 .newsbox-btn:hover, .newsbox-btn:focus {
     font-size: 18px;
     font-weight: 600;
@@ -439,25 +441,25 @@ img {
 }
 
 .newsbox-btn.btn-4 {
-    position: relative;
-    z-index: 1;
-    display: inline-block;
     min-width: 40px;
     height: 40px;
     margin-right: 5px;
     padding: 0;
-
-    font-size: 18px;
-    line-height: 0px;
-    font-weight: 600;
 }
 
 .newsbox-btn.btn-4:hover, .newsbox-btn.btn-4:focus {
-    font-size: 18px;
-    font-weight: 600;
     background-color: #000000;
     color: #ffffff;
 }
+
+.newsbox-btn.btn-5 {
+    text-transform: none;
+}
+
+.newsbox-btn.btn-5:hover, .newsbox-btn.btn-5:focus {
+    font-size: 18px;
+}
+
 
 /* :: 4.0 Header Area CSS */
 .header-area {
@@ -2204,7 +2206,7 @@ img {
 /* ====== The End ====== */
 
 
-#id_title, #id_category, #id_picture {
+#id_title, #id_picture {
     position: relative;
     z-index: 2;
     height: 54px;
@@ -2222,10 +2224,28 @@ img {
 
 }
 
+#id_category {
+    position: relative;
+    z-index: 2;
+    height: 200px;
+    width: 100%;
+    background-color: #f0f4f8;
+    font-size: 20px;
+    margin-bottom: 15px;
+    border: none;
+    border-radius: 0;
+    padding: 15px 30px;
+    font-weight: 500;
+    color: #aeaeae;
+    -webkit-transition-duration: 500ms;
+    transition-duration: 500ms;
+
+}
+
 #id_text {
     position: relative;
     z-index: 2;
-    height: 150px;
+    height: 300px;
     width: 100%;
     background-color: #f0f4f8;
     font-size: 20px;

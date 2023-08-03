@@ -35,4 +35,37 @@
 
 
 
+
+                                <form action="" method="get" style="font-size: 20px">
+                                    {% csrf_token %}
+                                    <div class="row" style="display: flex; justify-content: center">
+                                        {{ filterset.form.non_field_errors }}
+                                        <div class="col-12">
+                                            {{ filterset.form.category.errors }}
+                                            {{ filterset.form.category }}
+                                        </div>
+                                        <div class="col-12">
+                                            {{ filterset.form.datetime.errors }}
+                                            <label style="font-size: 20px; margin-top: 20px; font-weight: bold"
+                                                   for="{{ filterset.form.datetime.id_for_label }}">Новее чем:</label>
+                                            {{ filterset.form.datetime }}
+                                        </div>
+                                        <div class="col-12">
+                                            {{ filterset.form.title.errors }}
+                                            <label style="font-size: 20px; margin-top: 20px; font-weight: bold"
+                                                   for="{{ filterset.form.title.id_for_label }}">Поиск по заголовоку:</label>
+                                            {{ filterset.form.title }}
+                                        </div>
+                                        <div class="col-12">
+                                            {{ filterset.form.text.errors }}
+                                            <label style="font-size: 20px; margin-top: 20px; font-weight: bold"
+                                                   for="{{ filterset.form.text.id_for_label }}">Поиск по содержанию:</label>
+                                            {{ filterset.form.text }}
+                                        </div>
+                                    </div>
+                                    <input class="btn newsbox-btn btn-1 mt-15" type="submit" value="Найти"/>
+                                </form>
+
+
+
 1. Не загружаются файлы при добавлении новости через страницу! (через админку все работает!)

@@ -12,19 +12,25 @@ All posts
                 <div class="col-12">
                         <div id="breakingNewsTicker" class="ticker" style="height: 60px;">
                             <div style="display: flex; justify-content: center">
+
+
+
                                 <form action="" method="get">
                                     {{ filterset.form.non_field_errors }}
                                     {{ filterset.form.name__icontains.errors }}
 
                                     <div style="display: flex; justify-content: center">
-                                        {% for f in filterset.form %}
-                                            <div style="padding: 15px 10px 0 0; font-size: 20px; font-family: Raleway, sans-serif">
-                                                {{ f }}
-                                            </div>
-                                        {% endfor %}
+                                        <div style="padding: 15px 10px 0 0; font-size: 20px; font-family: Raleway, sans-serif">
+                                            {{ filterset.form.as_p }}
+                                        </div>
                                         <input class="btn newsbox-btn btn-1 mt-15" type="submit" value="Найти"/>
                                     </div>
                                 </form>
+
+
+
+
+
                             </div>
                         </div>
                 </div>
@@ -45,7 +51,11 @@ All posts
                         <div class="single-blog-post style-2 mb-5">
                             <!-- Blog Thumbnail -->
                             <div class="blog-thumbnail">
-                                <a href="{{ p.get_absolute_url }}"><img src="{{ p.picture.url }}" alt="Обложка новости"></a>
+                                {% if p.picture %}
+                                    <a href="{{ p.get_absolute_url }}"><img src="{{ p.picture.url }}" alt="Обложка новости"></a>
+                                {% else %}
+                                    <a href="{{ p.get_absolute_url }}"><img src="../media/uploads/default.jpg" alt="Обложка новости"></a>
+                                {% endif %}
                             </div>
 
                             <!-- Blog Content -->

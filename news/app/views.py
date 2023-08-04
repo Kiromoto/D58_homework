@@ -1,9 +1,10 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect, HttpResponseForbidden
 from django.views.generic import ListView, DetailView, UpdateView
+from django_filters.views import FilterView
 from django.conf import settings
 from .models import Post, PostCategory, Comment
-from .filters import PostFilter
+from .filters import PostFilter, PostFilter2
 from .forms import PostForm
 
 
@@ -24,6 +25,13 @@ class PostList(ListView):
         context = super().get_context_data(**kwargs)
         context['filterset'] = self.get_filter()
         return context
+
+
+class PostListFilter(FilterView):
+    model = Post
+    template_name = 'all_news.html'
+    paginate_by = 6
+    filterset_class = PostFilter2
 
 
 class PostDetail(DetailView):

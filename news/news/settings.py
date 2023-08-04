@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'app.apps.AppConfig',
     'django_filters',
+    'widget_tweaks',
     
 ]
 

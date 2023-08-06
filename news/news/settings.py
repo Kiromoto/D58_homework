@@ -15,11 +15,12 @@ import os
 
 load_dotenv()
 env_path = Path('.') / '.env'
+print(f'env_path {env_path}')
 load_dotenv(dotenv_path=env_path)
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
+print(f'BASE_DIR {BASE_DIR}')
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
@@ -45,7 +46,12 @@ INSTALLED_APPS = [
     'app.apps.AppConfig',
     'django_filters',
     'widget_tweaks',
-    
+
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.yandex',
+
 ]
 
 SITE_ID = 1
@@ -74,7 +80,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
 
-                # 'django.template.context_processors.request',
+                'django.template.context_processors.request',
                 'app.context_processors.navigate_context',
             ],
         },
@@ -137,6 +143,7 @@ MEDIA_URL = '/media/'
 LOGIN_URL = '/accounts/login/'
 LOGOUT_URL = '/news/'
 LOGIN_REDIRECT_URL = '/news/'
+LOGOUT_REDIRECT_URL = '/accounts/login/'
 
 LOGINURL = 'http://127.0.0.1:8000/accounts/login/'
 
@@ -144,3 +151,26 @@ LOGINURL = 'http://127.0.0.1:8000/accounts/login/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+
+]
+
+
+SOCIALACCOUNT_PROVIDERS = {
+    'yandex': {
+        'APP': {
+            'client_id': '123',
+            'secret': '456',
+            'key': ''
+        }
+    }
+}
+
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_UNIQUE_EMAIL = True
+ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
+ACCOUNT_EMAIL_VERIFICATION = 'none'

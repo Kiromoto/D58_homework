@@ -440,6 +440,9 @@ img {
 }
 
 .newsbox-btn.btn-4 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     min-width: 40px;
     height: 40px;
     margin-right: 5px;
@@ -2206,7 +2209,7 @@ img {
 /* ====== The End ====== */
 
 
-#id_title, #id_picture {
+.contact-form-area #id_title, #id_picture {
     position: relative;
     z-index: 2;
     height: 54px;
@@ -2224,7 +2227,7 @@ img {
 
 }
 
-#id_category {
+.contact-form-area #id_category {
     position: relative;
     z-index: 2;
     height: 200px;
@@ -2241,7 +2244,7 @@ img {
     transition-duration: 500ms;
 }
 
-#id_text {
+.contact-form-area #id_text {
     position: relative;
     z-index: 2;
     height: 300px;
@@ -2266,7 +2269,6 @@ img {
     font-size: 18px;
     border: none;
     border-radius: 0;
-    padding: 15px 30px;
     font-weight: 500;
     color: #aeaeae;
     -webkit-transition-duration: 500ms;
@@ -2285,6 +2287,8 @@ img {
     font-size: 18px;
     border: none;
     border-radius: 5px;
+    margin: 0;
+    padding: 0 0 0 10px;
     color: black;
     font-weight: bold;
     -webkit-transition-duration: 500ms;
@@ -2293,6 +2297,23 @@ img {
 
 #search-form #id_category option, #id_author option {
     font-size: 18px;
+
+}
+
+#search-form #search-btn {
+    display: flex;
+    margin: 0;
+    padding: 0;
+    align-self: center;
+    justify-content: center;
+
+}
+
+.new-edit-delete-box {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
 
 }
 

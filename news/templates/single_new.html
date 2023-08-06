@@ -19,7 +19,7 @@
                     <div class="post-content">
                         {% if new_categories %}
                             {% for c in new_categories %}
-                                 <a href="#"><p class="tag"><span>{{ c.category_id }}</span></p></a>
+                                <a href="http://127.0.0.1:8000/news/?category={{ c.category_id_id }}"><p class="tag"><span>{{ c.category_id }}</span></p></a>
                             {% endfor %}
                         {% endif %}
                         <p class="post-title" style="font-size: 45px">{{ single_post.title }}</p>
@@ -49,9 +49,14 @@
                         {% endif %}
 
                         {% if user == post_author_user %}
-                            <a href="{% url 'update_new' single_post.pk %}">
-                                <button class="btn newsbox-btn btn-5 mt-30" type="button">Редактировать новость</button>
-                            </a>
+                            <div class="new-edit-delete-box">
+                                <a href="{% url 'update_new' single_post.pk %}">
+                                    <button class="btn newsbox-btn btn-5 mt-30" type="button">Редактировать новость</button>
+                                </a>
+                                <a href="{% url 'delete_new' single_post.pk %}">
+                                    <button class="btn newsbox-btn btn-5 mt-30" type="button">Удалить новость</button>
+                                </a>
+                            </div>
                         {% endif %}
 
                     </div>

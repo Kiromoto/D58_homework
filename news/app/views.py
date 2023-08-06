@@ -1,9 +1,10 @@
 from django.shortcuts import render, redirect
+from django.urls import reverse_lazy
 from django.http import HttpResponseRedirect, HttpResponseForbidden
-from django.views.generic import ListView, DetailView, UpdateView
+from django.views.generic import ListView, DetailView, UpdateView, DeleteView
 from django_filters.views import FilterView
 from django.conf import settings
-from .models import Post, PostCategory, Comment
+from .models import Post, PostCategory, Comment, Category
 from .filters import PostFilter, PostFilter2
 from .forms import PostForm
 
@@ -42,12 +43,11 @@ class PostDetail(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['new_categories'] = list(PostCategory.objects.filter(post_id_id=context['single_post'].id))
+        print(f"context['new_categories'] === {context['new_categories']}")
         context['last_news'] = list(Post.objects.order_by('-datetime')[:7])
         context['new_comments'] = list(Comment.objects.order_by('-datetime').filter(post=context['single_post']))
         self.object = self.get_object()
         context['post_author_user'] = self.object.author.user
-        print(f'context["post_author_user"] {context["post_author_user"]}')
-
         return context
 
 
@@ -64,13 +64,23 @@ class PostUpdate(UpdateView):
 
     def get(self, request, *args, **kwargs):
         self.object = self.get_object()
-
         if not request.user == self.object.author.user:
-            print(f'if not {request.user} == {self.object.author.user}')
             return HttpResponseForbidden(
                 f"Вы не обладаете правами на редактирование поста << {self.object.title} >>, так как вы не его автор!")
-        else:
-            print(f'if  {request.user} == {self.object.author.user}')
+
+        return super().get(request, *args, **kwargs)
+
+
+class PostDelete(DeleteView):
+    model = Post
+    template_name = 'delete_new.html'
+    success_url = reverse_lazy('all_news')
+
+    def get(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        if not request.user == self.object.author.user:
+            return HttpResponseForbidden(
+                f"Вы не обладаете правами на удаление поста << {self.object.title} >>, так как вы не его автор!")
 
         return super().get(request, *args, **kwargs)
 
@@ -84,7 +94,6 @@ def add_new(request):
 
         if request.method == 'POST':
             form = PostForm(request.POST, request.FILES)
-            print(f'request.FILES === {request.FILES}')
             if form.is_valid():
                 post = form.save(commit=False)
                 post.author = request.user.author

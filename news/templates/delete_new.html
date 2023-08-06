@@ -1,0 +1,27 @@
+{% extends 'index.html' %}
+{% load custom_tags %}
+
+{% block title %}
+Delete new
+{% endblock title %}
+
+{% block content %}
+<section class="post-news-area section-padding-100-0 mb-70">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="post-a-comment-area mb-30 clearfix">
+                <h1>Удаление новости</h1>
+                <hr>
+                <form style="display: flex; flex-direction: column; justify-content: center" action="" method="post">
+                    {% csrf_token %}
+                    <p style="font-size: 20px">Вы уверены, что хотите удалить новость:</p>
+                    <p style="font-size: 25px">{{ object.title }} ?</p>
+                    <input class="btn newsbox-btn btn-5 mt-30" style="width: 100%" type="submit" value="Да, удалить!" />
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+{% endblock content %}

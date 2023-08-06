@@ -15,30 +15,14 @@ All posts
                             <div style="display: flex; justify-content: space-around">
                                 <form id="search-form" style="display: flex" action="" method="get">
                                     {{ filterset.form.as_p }}
-                                    <input class="btn newsbox-btn btn-1 mt-15" type="submit" value="Найти"/>
+                                    <input id="search-btn" class="btn newsbox-btn btn-1 mt-15" type="submit" value="Найти"/>
                                 </form>
-
-<!--                                <form action="" method="get">-->
-<!--                                    {{ filterset.form.non_field_errors }}-->
-<!--                                    {{ filterset.form.name__icontains.errors }}-->
-
-<!--                                    <div style="display: flex; justify-content: center">-->
-<!--                                        <div style="padding: 15px 10px 0 0; font-size: 20px; font-family: Raleway, sans-serif">-->
-<!--                                            {{ filterset.form.as_p }}-->
-<!--                                        </div>-->
-<!--                                        <input class="btn newsbox-btn btn-1 mt-15" type="submit" value="Найти"/>-->
-<!--                                    </div>-->
-<!--                                </form>-->
-
                             </div>
                         </div>
                 </div>
             </div>
         </div>
     </section>
-
-
-
 
 <div class="top-news-area section-padding-100">
     <div class="container">
@@ -102,7 +86,7 @@ All posts
                 {% endif %}
 
                 <a href="?{% url_replace page=page_obj.number %}">
-                    <button class="btn newsbox-btn btn-4 mt-15" disabled="true" style="background-color: #000000" >{{ page_obj.number }}</button>
+                    <button class="btn newsbox-btn btn-4 mt-15" disabled="true" style="background-color: #000000;" >{{ page_obj.number }}</button>
                 </a>
 
                  {% if page_obj.has_next and page_obj.next_page_number < page_obj.paginator.num_pages %}

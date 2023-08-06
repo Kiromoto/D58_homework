@@ -3,6 +3,8 @@ import datetime
 from django.contrib.auth.models import User
 from django.db import models
 from django.urls import reverse
+from django.http import HttpResponseRedirect
+from django.conf import settings
 
 
 class Author(models.Model):
@@ -43,6 +45,12 @@ class Category(models.Model):
 
     def __str__(self):
         return self.name
+
+    def get_absolute_url(self):
+        print(f'HttpResponseRedirect(settings.LOGIN_REDIRECT_URL) === {HttpResponseRedirect(settings.LOGIN_REDIRECT_URL)}')
+        print(f'settings.ALLOWD_HOST+settings.LOGIN_REDIRECT_URL === {settings.ALLOWD_HOST+settings.LOGIN_REDIRECT_URL}')
+        # return reverse('all_news', kwargs={'category': self.id})
+        return settings.ALLOWD_HOST+settings.LOGIN_REDIRECT_URL
 
 
 class Post(models.Model):

@@ -15,17 +15,18 @@ import os
 
 load_dotenv()
 env_path = Path('.') / '.env'
-print(f'env_path {env_path}')
 load_dotenv(dotenv_path=env_path)
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-print(f'BASE_DIR {BASE_DIR}')
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.getenv('SECRET_KEY')
+# SECRET_KEY = 'django-insecure-_gexu_!nlpt6j2mlb^f-=iivffw)pswh-le5i!70em=i)dsmh('
+
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -159,15 +160,15 @@ AUTHENTICATION_BACKENDS = [
 ]
 
 
-# SOCIALACCOUNT_PROVIDERS = {
-#     'yandex': {
-#         'APP': {
-#             'client_id': '123',
-#             'secret': '456',
-#             'key': ''
-#         }
-#     }
-# }
+SOCIALACCOUNT_PROVIDERS = {
+    'yandex': {
+        'APP': {
+            'client_id': os.getenv('yandex.APP.client_id'),
+            'secret': os.getenv('yandex.APP.secret'),
+            'key': os.getenv('yandex.APP.secret'),
+        }
+    }
+}
 
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_UNIQUE_EMAIL = True

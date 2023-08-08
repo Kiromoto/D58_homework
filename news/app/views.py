@@ -7,6 +7,7 @@ from django.conf import settings
 from .models import Post, PostCategory, Comment, Category
 from .filters import PostFilter, PostFilter2
 from .forms import PostForm
+from django.contrib.auth.mixins import PermissionRequiredMixin
 
 
 class PostList(ListView):
@@ -51,7 +52,8 @@ class PostDetail(DetailView):
         return context
 
 
-class PostUpdate(UpdateView):
+class PostUpdate(PermissionRequiredMixin, UpdateView):
+    permission_required = ('app.change_post',)
     form_class = PostForm
     model = Post
     template_name = 'add_new.html'
@@ -71,7 +73,8 @@ class PostUpdate(UpdateView):
         return super().get(request, *args, **kwargs)
 
 
-class PostDelete(DeleteView):
+class PostDelete(PermissionRequiredMixin, DeleteView):
+    permission_required = ('app.delete_post',)
     model = Post
     template_name = 'delete_new.html'
     success_url = reverse_lazy('all_news')
@@ -85,7 +88,6 @@ class PostDelete(DeleteView):
         return super().get(request, *args, **kwargs)
 
 
-# @login_required(login_url=settings.LOGINURL)
 def add_new(request):
     if request.user.is_authenticated and request.user.author:
         if request.method == 'GET':

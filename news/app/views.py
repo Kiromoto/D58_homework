@@ -9,6 +9,7 @@ from .filters import PostFilter, PostFilter2
 from .forms import PostForm
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.contrib.auth.decorators import login_required, permission_required
+from django.core.mail import send_mail
 
 
 class PostList(ListView):
@@ -110,3 +111,27 @@ def add_new(request):
 
     else:
         return HttpResponseRedirect(settings.LOGIN_REDIRECT_URL)
+
+
+def send_mail_example(request):
+    send_mail(subject='Нажатие кнопки',
+              message=f'{request.user.username}, вы успешно нажали кнопку!',
+              from_email=settings.EMAIL_HOST_USER,  # будет использовано значение DEFAULT_FROM_EMAIL
+              recipient_list=['kiromoto@tut.by', ],
+              )
+
+    return HttpResponseRedirect(settings.LOGIN_REDIRECT_URL)
+
+def send_mail_example(request):
+    send_mail(subject='Нажатие кнопки',
+              message=f'{request.user.username}, вы успешно нажали кнопку!',
+              from_email=settings.EMAIL_HOST_USER,  # будет использовано значение DEFAULT_FROM_EMAIL
+              recipient_list=['kiromoto@tut.by', ],
+              )
+
+    return HttpResponseRedirect(settings.LOGIN_REDIRECT_URL)
+
+
+def become_an_author(request):
+    print('def become_an_author(request):')
+    return render(request, template_name='become_an_author.html',)

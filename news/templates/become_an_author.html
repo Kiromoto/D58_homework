@@ -1,0 +1,22 @@
+{% extends 'index.html' %}
+{% load custom_tags %}
+
+{% block title %}
+Delete new
+{% endblock title %}
+
+{% block content %}
+<section class="post-news-area section-padding-100-0 mb-70">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="post-a-comment-area mb-30 clearfix">
+                <h1>Поздравляю, {{current_user}}! Вы стали автором!</h1>
+                <hr>
+                <a href="{% url 'add_new' %}"><button class="btn newsbox-btn btn-5 mt-30" style="width: 100%">Опубликовать свою первую новость!</button></a>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+{% endblock content %}

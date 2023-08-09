@@ -8,6 +8,7 @@ from .models import Post, PostCategory, Comment, Category
 from .filters import PostFilter, PostFilter2
 from .forms import PostForm
 from django.contrib.auth.mixins import PermissionRequiredMixin
+from django.contrib.auth.decorators import login_required, permission_required
 
 
 class PostList(ListView):
@@ -88,6 +89,8 @@ class PostDelete(PermissionRequiredMixin, DeleteView):
         return super().get(request, *args, **kwargs)
 
 
+# @login_required
+@permission_required('app.add_post', raise_exception=True)
 def add_new(request):
     if request.user.is_authenticated and request.user.author:
         if request.method == 'GET':

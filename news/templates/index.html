@@ -73,7 +73,7 @@
                                 <li><a href="#">Категории</a>
                                     <ul class="dropdown">
                                         {% for c in categories %}
-                                            <li><a href="#">{{ c.name }}</a></li>
+                                            <li><a href="http://127.0.0.1:8000/news/?category={{ c.id }}">{{ c.name }}</a></li>
                                         {% endfor %}
                                     </ul>
                                 </li>
@@ -85,6 +85,7 @@
                                             {% endif %}
 
                                             <li><a href="{% url 'send_mail_example' %}">Отправить письмо!</a></li>
+                                            <li><a href="{% url 'send_mail_example' %}">Мои подписки</a></li>
                                         </ul>
                                     </li>
                                     <li><a href="/accounts/logout/">Выйти</a></li>

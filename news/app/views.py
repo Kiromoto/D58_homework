@@ -1,15 +1,16 @@
+from .models import Post, PostCategory, Comment, Category, Author
+from .filters import PostFilter, PostFilter2
+from .forms import PostForm
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.http import HttpResponseRedirect, HttpResponseForbidden
 from django.views.generic import ListView, DetailView, UpdateView, DeleteView
 from django_filters.views import FilterView
-from django.conf import settings
-from .models import Post, PostCategory, Comment, Category
-from .filters import PostFilter, PostFilter2
-from .forms import PostForm
+from django.contrib.auth.models import Group
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.contrib.auth.decorators import login_required, permission_required
 from django.core.mail import send_mail
+from django.conf import settings
 
 
 class PostList(ListView):
@@ -46,7 +47,6 @@ class PostDetail(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['new_categories'] = list(PostCategory.objects.filter(post_id_id=context['single_post'].id))
-        print(f"context['new_categories'] === {context['new_categories']}")
         context['last_news'] = list(Post.objects.order_by('-datetime')[:7])
         context['new_comments'] = list(Comment.objects.order_by('-datetime').filter(post=context['single_post']))
         self.object = self.get_object()
@@ -122,6 +122,8 @@ def send_mail_example(request):
 
     return HttpResponseRedirect(settings.LOGIN_REDIRECT_URL)
 
+
+@login_required
 def send_mail_example(request):
     send_mail(subject='Нажатие кнопки',
               message=f'{request.user.username}, вы успешно нажали кнопку!',
@@ -132,6 +134,15 @@ def send_mail_example(request):
     return HttpResponseRedirect(settings.LOGIN_REDIRECT_URL)
 
 
+@login_required
 def become_an_author(request):
     print('def become_an_author(request):')
-    return render(request, template_name='become_an_author.html',)
+    author = Author(user=request.user)
+    author.save()
+    print(f'author.save() === {author.user.username}')
+
+    authors_group = Group.objects.get(name='authors')
+    if not request.user.groups.filter(name='authors').exists():
+        authors_group.user_set.add(request.user)
+
+    return render(request, template_name='become_an_author.html', )

@@ -12,8 +12,24 @@ My subscriptions
             <div class="post-a-comment-area mb-30 clearfix">
                 <h1>Страница подписок на категории</h1>
                 <hr>
-                <p>При оформлении подписки вы получите немедленное уведомление на электронную почту о публикации свежей новости</p>
-                <p>А каждую пятницу в 18:00 письмо сразу со всеми свежими новостями за неделю!</p>
+                <p style="font-size: 18px">При оформлении подписки вы получите немедленное уведомление на электронную почту о публикации свежей новости</p>
+                <p style="font-size: 18px">А каждую пятницу в 18:00 письмо сразу со всеми свежими новостями за неделю!</p>
+                <hr>
+                <table>
+                    {% for c in category %}
+                        <tr>
+                            <td style="font-size: 18px; text-align: left">{{c.name}}</td>
+                            <td style="font-size: 18px; align: left">
+                                <a href="#">
+                                    <button class="btn newsbox-btn btn-5 mt-30" type="button" style="margin-left: 40px">Подписаться</button>
+                                </a>
+                                <a href="#">
+                                    <button class="btn newsbox-btn btn-5 mt-30" disabled="true" type="button" style="margin-left: 40px">Отписаться</button>
+                                </a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </table>
             </div>
         </div>
     </div>

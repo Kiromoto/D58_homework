@@ -20,12 +20,21 @@ My subscriptions
                         <tr>
                             <td style="font-size: 18px; text-align: left">{{c.name}}</td>
                             <td style="font-size: 18px; align: left">
-                                <a href="#">
-                                    <button class="btn newsbox-btn btn-5 mt-30" type="button" style="margin-left: 40px">Подписаться</button>
-                                </a>
-                                <a href="#">
-                                    <button class="btn newsbox-btn btn-5 mt-30" disabled="true" type="button" style="margin-left: 40px">Отписаться</button>
-                                </a>
+                                {% if c in subscribtions %}
+                                    <a href="#">
+                                        <button class="btn newsbox-btn btn-5 mt-30" disabled="true" type="button" style="margin-left: 40px">Подписаться</button>
+                                    </a>
+                                    <a href="#">
+                                        <button class="btn newsbox-btn btn-5 mt-30"  type="button" style="margin-left: 40px">Отписаться</button>
+                                    </a>
+                                {% else %}
+                                    <a href="#">
+                                        <button class="btn newsbox-btn btn-5 mt-30" type="button" style="margin-left: 40px">Подписаться</button>
+                                    </a>
+                                    <a href="#">
+                                        <button class="btn newsbox-btn btn-5 mt-30" disabled="true" type="button" style="margin-left: 40px">Отписаться</button>
+                                    </a>
+                                {% endif %}
                             </td>
                         </tr>
                     {% endfor %}

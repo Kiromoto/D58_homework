@@ -11,7 +11,6 @@ urlpatterns = [
     path('<int:pk>/delete/', PostDelete.as_view(), name='delete_new'),
     path('sendemail/', send_mail_example, name='send_mail_example'),
     path('becomeanauthor/', become_an_author, name='become_an_author'),
-    path('becomeanauthor/', become_an_author, name='become_an_author'),
 ]
 
 # urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

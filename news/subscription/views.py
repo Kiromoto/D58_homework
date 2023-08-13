@@ -11,21 +11,32 @@ class SubscribersNews(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['subscribtions'] = Subscriber.objects.all()
+        context['subscribtions'] = Subscriber.objects.filter(user=self.request.user)
 
-        context['subscribtions'] = Subscriber.objects.filter(user=self.request.user).values('category')
-        print(f'user=self.request.user === {self.request.user}')
-        print(f' context["subscribtions"] === {list(context["subscribtions"])}')
-        print(f' context["category"] === {list(context["category"])}')
+        print(f' context["subscribtions"] === {context["subscribtions"]}')
+        print(f' context["category"] === {context["category"]}')
 
-        # context['new_categories'] = list(PostCategory.objects.filter(post_id_id=context['single_post'].id))
-        # context['last_news'] = list(Post.objects.order_by('-datetime')[:7])
-        # context['new_comments'] = list(Comment.objects.order_by('-datetime').filter(post=context['single_post']))
-        # self.object = self.get_object()
-        # context['post_author_user'] = self.object.author.user
+        category_sub = []
+        category_unsub = []
 
+        for c in context["category"]:
+            for el in context['subscribtions']:
+                print(f'c= {c}  el.category= {el.category} c==el.category {c == el.category} c in category_sub {c in category_sub} c in category_unsub {c in category_unsub}')
+                print(f'category_sub>>> {category_sub}')
+                print(f'category_unsub>>> {category_unsub}')
+                if (c == el.category) and (c not in category_sub):
+                    category_sub.append(c)
+                    break
+
+            category_unsub.append(c)
+
+
+        context["category_sub"] = category_sub
+        context["category_unsub"] = category_unsub
+
+        print(f' context["category_sub"] === {context["category_sub"]}')
+        print(f' context["category_unsub"] === {context["category_unsub"]}')
         return context
-
 
     # def get_filter(self):
     #     return PostFilter(self.request.GET, queryset=super().get_queryset())
@@ -37,4 +48,3 @@ class SubscribersNews(ListView):
     #     context = super().get_context_data(**kwargs)
     #     context['filterset'] = self.get_filter()
     #     return context
-

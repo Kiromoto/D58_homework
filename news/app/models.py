@@ -85,8 +85,8 @@ class Post(models.Model):
 
 
 class Subscriber(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
-    category = models.ForeignKey(Category, on_delete=models.CASCADE, blank=True, null=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True, related_name='subscribers')
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, blank=True, null=True, related_name='subscribers')
 
 
 class PostCategory(models.Model):

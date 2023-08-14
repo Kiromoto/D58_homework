@@ -16,25 +16,31 @@ My subscriptions
                 <p style="font-size: 18px">А каждую пятницу в 18:00 письмо сразу со всеми свежими новостями за неделю!</p>
                 <hr>
                 <table>
-                    {% for c in category %}
+                    {% for category in categories %}
                         <tr>
-                            <td style="font-size: 18px; text-align: left">{{c.name}}</td>
+                            <td style="font-size: 22px; font-weight: bold; text-align: left">{{category.name}}</td>
                             <td style="font-size: 18px; align: left">
-                                {% if c in subscribtions %}
-                                    <a href="#">
-                                        <button class="btn newsbox-btn btn-5 mt-30" disabled="true" type="button" style="margin-left: 40px">Подписаться</button>
-                                    </a>
-                                    <a href="#">
-                                        <button class="btn newsbox-btn btn-5 mt-30"  type="button" style="margin-left: 40px">Отписаться</button>
-                                    </a>
-                                {% else %}
-                                    <a href="#">
-                                        <button class="btn newsbox-btn btn-5 mt-30" type="button" style="margin-left: 40px">Подписаться</button>
-                                    </a>
-                                    <a href="#">
-                                        <button class="btn newsbox-btn btn-5 mt-30" disabled="true" type="button" style="margin-left: 40px">Отписаться</button>
-                                    </a>
-                                {% endif %}
+                                <form method="post">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="category_id" value="{{ category.id }}" />
+                                    {% if category.user_subscribed %}
+                                        <button class="btn newsbox-btn btn-5 mt-30" disabled="true"
+                                                style="margin-left: 40px; background-color: #173045">Подписаться
+                                        </button>
+
+                                        <button name="action" value="unsubscribe" class="btn newsbox-btn btn-5 mt-30"
+                                                style="margin-left: 40px">Отписаться
+                                        </button>
+                                    {% else %}
+                                        <button name="action" value="subscribe" class="btn newsbox-btn btn-5 mt-30"
+                                                style="margin-left: 40px">Подписаться
+                                        </button>
+
+                                        <button class="btn newsbox-btn btn-5 mt-30" disabled="true"
+                                                style="margin-left: 40px; background-color: #173045">Отписаться
+                                        </button>
+                                    {% endif %}
+                                </form>
                             </td>
                         </tr>
                     {% endfor %}

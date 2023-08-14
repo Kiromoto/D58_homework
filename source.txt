@@ -1,0 +1,3 @@
+https://www.yourtodo.ru/posts/12/
+https://ru.hexlet.io/courses/python-django-orm/lessons/annotation/theory_unit
+https://maxstizhko.com/ru/blog/five-tips-for-django

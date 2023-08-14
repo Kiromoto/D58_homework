@@ -80,7 +80,7 @@ All posts
 
             {% if page_obj.number > 1 and page_obj.number < page_obj.paginator.num_pages %}
                 {% if page_obj.has_previous and page_obj.previous_page_number > 1 %}
-                    <a href="{% url_replace page=page_obj.previous_page_number %}">
+                    <a href="?{% url_replace page=page_obj.previous_page_number %}">
                         <button class="btn newsbox-btn btn-4 mt-15">{{page_obj.previous_page_number}}</button>
                     </a>
                 {% endif %}

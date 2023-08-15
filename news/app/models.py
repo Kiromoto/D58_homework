@@ -85,13 +85,13 @@ class Post(models.Model):
 
 
 class Subscriber(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True, related_name='subscribers')
-    category = models.ForeignKey(Category, on_delete=models.CASCADE, blank=True, null=True, related_name='subscribers')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True, related_name='subscribers_user',)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, blank=True, null=True, related_name='subscribers_category',)
 
 
 class PostCategory(models.Model):
-    post_id = models.ForeignKey(Post, on_delete=models.CASCADE)
-    category_id = models.ForeignKey(Category, on_delete=models.CASCADE)
+    post_id = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='post')
+    category_id = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='category')
 
 
 class Comment(models.Model):

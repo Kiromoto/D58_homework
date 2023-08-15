@@ -7,3 +7,7 @@ class AppConfig(AppConfig):
 
     def ready(self):
         from . import signals
+        from .scheduler import scheduler
+        print('def ready...OK! import...OK! Started from apps.py!')
+        scheduler.start()
+

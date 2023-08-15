@@ -10,19 +10,17 @@ from django.conf import settings
 
 @receiver(m2m_changed, sender=PostCategory)
 def post_created(sender, instance, action, **kwargs):
-    print(f"instance {instance}")
-    emails = []
     try:
         instance_category = PostCategory.objects.filter(post_id=instance.id).values_list('category_id', flat=True)
-        print(f'Try instance_category {instance_category}')
 
-        users_emails = User.objects.filter(pk__in=Subscriber.objects.filter(category__in=instance_category).values_list('user', flat=True)).values_list('email', flat=True)
-        print(f"User.objects.filter(pk__in=m) === {users_emails}")
+        users_emails = User.objects.filter(
+            pk__in=Subscriber.objects.filter(category__in=instance_category).values_list('user', flat=True)
+        ).values_list('email', flat=True)
 
         instance_category_name = PostCategory.objects.filter(post_id=instance.id).values_list('category_id__name', flat=True)
-        print(f'Try instance_category_name {" ".join(list(instance_category_name))}')
+
     except Exception:
-        print('Ошибка получения данных о категории')
+        print('Ошибка получения данных о категории!')
     else:
         subject = f'Новая публикация в вашей любимой категории {" ".join(list(instance_category_name))}'
         html_content = render_to_string('email_new_add.html',
@@ -41,4 +39,4 @@ def post_created(sender, instance, action, **kwargs):
             msg.attach_alternative(html_content, 'text/html')
             msg.send()
     finally:
-        print(f'Print emails from signals.py: {emails}')
+        print(f'Emails successfully sent from signals.py: {users_emails}')

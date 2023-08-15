@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'subscription',
     'django_filters',
     'widget_tweaks',
+    'django_apscheduler',
 
     'allauth',
     'allauth.account',
@@ -187,4 +188,7 @@ EMAIL_USE_TLS = False
 EMAIL_USE_SSL = True
 
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+APSCHEDULER_DATETIME_FORMAT = "N j, Y, f:s a"
+APSCHEDULER_RUN_NOW_TIMEOUT = 25
 

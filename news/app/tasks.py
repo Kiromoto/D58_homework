@@ -1,49 +1,45 @@
-from datetime import date, timedelta
-from .models import *
+from datetime import datetime
+from .models import Subscriber, Post
+from django.contrib.auth.models import User
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
+from django.conf import settings
 
 
 def weekly_mails():
-    print(f'Print from TASKS.py every 5 seconds! weekly_mails {datetime.datetime}')
-    # try:
-    #     for user_one in User.objects.all():
-    #         user_cat = []
-    #         user_cat.clear()
-    #         user_posts = []
-    #         user_posts.clear()
-    #         cat = CategorySubscriber.objects.filter(subscriber_user_id=user_one.id).values('category_name')
-    #         print(f'User: {user_one.username}. Его e-mail: {user_one.email}. И подписан он на категории {cat}')
-    #         if cat and user_one.email:
-    #             for el in cat:
-    #                 user_cat.append(el["category_name"])
-    #
-    #             for cat_id in user_cat:
-    #                 cat_p = PostCategory.objects.filter(category_id=cat_id).values('post_id')
-    #                 for i in cat_p:
-    #                     if Post.objects.get(id=i['post_id']) not in user_posts:
-    #                         d = Post.objects.get(id=i['post_id']).post_create_datetime
-    #                         if d.date() >= (date.today() - timedelta(days=7)):
-    #                             user_posts.append(Post.objects.get(id=i['post_id']))
-    #
-    #         if user_posts:
-    #             print(
-    #                 f'У юзера {user_one.username}, e-mail: {user_one.email} насобирались новости на отправку: {user_posts}')
-    #             subject = _('Здравствуйте,') + user_one.username + '.' + _(
-    #                 'Here are the most interesting news from the past week on NewsPaper')  # вот самые интересные новости за прошлую неделю на NewsPaper
-    #             ur = []
-    #             ur.clear()
-    #             for p in user_posts:
-    #                 ur.append({p: f'http://127.0.0.1:8000{p.get_absolute_url()}'})
-    #
-    #             html_content = render_to_string('send_everyweek.html', {'ur': ur, })
-    #             msg = EmailMultiAlternatives(subject=subject, from_email='tlfordjango@mail.ru', to=[user_one.email, ], )
-    #             msg.attach_alternative(html_content, 'text/html')
-    #
-    #             try:
-    #                 msg.send()
-    #             except Exception as e:
-    #                 print(f'Не удалось отправить письмо на почтовый адрес: {user_one.email}. Ошибка: {e}')
-    #
-    # except Exception as e:
-    #     print(f'Ошибка получения данных из db. {e}')
+    print(
+        f'Print from TASKS.py every 5 seconds! weekly_mails {datetime.now().hour}:{datetime.now().minute}:{datetime.now().second}')
+    users_emails = []
+
+    try:
+        for user_one in User.objects.all():
+            user_subscription = Subscriber.objects.filter(user=user_one).values_list("category", flat=True)
+            if user_one.email and user_subscription:
+                last_news = Post.objects.filter(category__in=user_subscription, is_new=True)
+                if last_news:
+                    subject = f'Привет, {user_one.username}! Мы собрали для тебя подборку последних новостей!!!'
+                    html_content = render_to_string('email_weekly.html',
+                                                    {'last_news': last_news,}
+                                                    )
+                    msg = EmailMultiAlternatives(subject=subject,
+                                                 from_email=settings.EMAIL_HOST_USER,
+                                                 to=[user_one.email],
+                                                 )
+                    msg.attach_alternative(html_content, 'text/html')
+                    msg.send()
+            else:
+                print(f'{user_one} has not email or subscription!!! {user_one.email} {user_subscription}')
+
+    except Exception:
+        print('Ошибка получения данных о категории!')
+    else:
+        last_news.is_new = False
+        # bulk_update()
+        print(f'Работаем без ошибок! {last_news.is_new}')
+    finally:
+        print(f'Emails successfully sent from signals.py: {users_emails}')
+
+
+
+
+

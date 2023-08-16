@@ -14,7 +14,6 @@ logger = logging.getLogger(__name__)
 
 
 def my_job():
-    print(f'APScheduler.py every 5 seconds!')
     weekly_mails()
 
 
@@ -32,8 +31,8 @@ class Command(BaseCommand):
 
         scheduler.add_job(
             my_job,
-            trigger=CronTrigger(second="*/5"),
-            # trigger=CronTrigger(day_of_week="fri", hour="18", minute="00"),
+            # trigger=CronTrigger(second="*/30"),
+            trigger=CronTrigger(day_of_week="fri", hour="18", minute="00"),
             id="my_job",  # The `id` assigned to each job MUST be unique
             max_instances=1,
             replace_existing=True,
